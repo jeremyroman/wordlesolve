@@ -1,3 +1,4 @@
+use rand::{thread_rng, seq::SliceRandom};
 use std::env;
 use std::fmt;
 use std::fs::File;
@@ -153,6 +154,9 @@ fn main() -> io::Result<()> {
     let mut goals = read_dict("goals.txt")?;
     let mut dict = read_dict("extra.txt")?;
     dict.extend(&goals);
+
+    goals.shuffle(&mut thread_rng());
+    dict.shuffle(&mut thread_rng());
 
     let args: Vec<String> = env::args().collect();
     let goal = Word::new(&args[1]);
